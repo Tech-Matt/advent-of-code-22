@@ -4,15 +4,11 @@
  * The elves have written a list of their food calories. One per line. Every elf separate his calories
  * from the previous elf with a blank line.
  *
- * Problem: Find the elf carrying the most calories. Return calories value of that elf
+ * Problem 1: Find the elf carrying the most calories. Return calories value of that elf
+ * Problem 2: Find top 3 elves and return sum
  */
 
-/* Solution:
- * -import file
- * -create max_sum
- * -evaluate sum for each elf. If elf_sum is greater than max_sum then max_sum = elf_sum
- * -return max_sum
- */
+
 
 use std::fs::File;
 use std::io::{self, BufRead};
@@ -21,6 +17,7 @@ use std::path::Path;
 fn main() {
    
     let mut max_sum :u32 = 0;
+    let mut sum_vec = Vec::new();
     //Importing file
     if let Ok(data) = read_lines("data.txt") {
          let mut partial_sum: u32 = 0;
@@ -31,6 +28,9 @@ fn main() {
                 if partial_sum > max_sum {
                     max_sum = partial_sum;
                 }
+
+                //Store sum in vector
+                sum_vec.push(partial_sum);
 
                 partial_sum = 0;
                 //Proceed to next iteration
@@ -43,8 +43,14 @@ fn main() {
             //println!("{}", line.unwrap());
          }
 
-         println!("N° of Max calories is: {}", max_sum);
+         //Get the sum of top 3 elves
+         sum_vec.sort();
+         let len = sum_vec.len();
+         let top3_sum: u32 = sum_vec[len - 1] + sum_vec[len - 2] + sum_vec[len-3];
 
+
+         println!("N° of Max calories is: {}", max_sum);
+         println!("N° of Top 3 calories is: {}", top3_sum);
     }
     
 }
