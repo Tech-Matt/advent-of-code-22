@@ -7,15 +7,14 @@
  * Problem 1: Find the elf carrying the most calories. Return calories value of that elf
  * Problem 2: Find top 3 elves and return sum
  */
-use std::io::BufReader;
-use common::fileio;
+use utils::fileio;
 
 fn main() {
 
     let mut max_sum :u32 = 0;
     let mut sum_vec = Vec::new();
     //Importing file
-    if let Ok(data) = read_lines("data.txt") {
+    if let Ok(data) = fileio::read_lines("data.txt") {
         let mut partial_sum: u32 = 0;
 
         for line in data {
@@ -24,10 +23,8 @@ fn main() {
                 if partial_sum > max_sum {
                     max_sum = partial_sum;
                 }
-
                 //Store sum in vector
                 sum_vec.push(partial_sum);
-
                 partial_sum = 0;
                 //Proceed to next iteration
                 continue;
